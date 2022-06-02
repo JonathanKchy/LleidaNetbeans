@@ -2,10 +2,17 @@
 package sodiglleida;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.net.ssl.HttpsURLConnection;
+
+
 
 
 
@@ -13,13 +20,14 @@ public class SodigLleida {
  
     
    
-    public static void main(String[] args) throws MalformedURLException {
+    public static void main(String[] args) throws MalformedURLException, IOException {
         System.out.println("Hola mundo");
-          
+          int contador=0;
+        
         try {
          
-           URL url= new URL("https://tsa.lleida.net/cgi-bin/mailcertapi.cgi?action=list_pdf&user=sodigsa@ec&password=TIiANcmymJ&mail_id=100274269");
-          //URL url= new URL("https://tsa.lleida.net/cgi-bin/mailcertapi.cgi?action=list_pdf&user=sodigsa@ec&password=TIiANcmymJ&mail_date_min=20220602000000");
+        //  URL url= new URL("https://tsa.lleida.net/cgi-bin/mailcertapi.cgi?action=list_pdf&user=sodigsa@ec&password=TIiANcmymJ&mail_id=100274269");
+        URL url= new URL("https://tsa.lleida.net/cgi-bin/mailcertapi.cgi?action=list_pdf&user=sodigsa@ec&password=TIiANcmymJ&mail_date_min=20220101070000&mail_date_max=20220601070000");
         HttpsURLConnection conn=(HttpsURLConnection)url.openConnection();
         conn.setRequestMethod("GET");
         conn.connect();
@@ -37,6 +45,7 @@ public class SodigLleida {
                     if (linea.contains("<mail_id>")) {
                         int tamano=linea.length();
                         int fin=tamano-10;
+                        contador ++;
                         //System.out.println(linea.length());
                         //System.out.println(linea);
                         //System.out.println("mail_id: "+linea.substring(9, fin));
@@ -50,11 +59,60 @@ public class SodigLleida {
                         //System.out.println("mail_id: "+linea.substring(9, fin));
                         informationString.append("mail_date: "+linea.substring(11, fin));
                         informationString.append("\n");
+                    }else if(linea.contains("<mail_from>")) {
+                        int tamano=linea.length();
+                        int fin=tamano-12;
+                        //System.out.println(linea.length());
+                        //System.out.println(linea);
+                        //System.out.println("mail_id: "+linea.substring(9, fin));
+                        informationString.append("mail_from: "+linea.substring(11, fin));
+                        informationString.append("\n");
+                    }else if(linea.contains("<mail_to>")) {
+                        int tamano=linea.length();
+                        int fin=tamano-10;
+                        //System.out.println(linea.length());
+                        //System.out.println(linea);
+                        //System.out.println("mail_id: "+linea.substring(9, fin));
+                        informationString.append("mail_to: "+linea.substring(9, fin));
+                        informationString.append("\n");
+                    }else if(linea.contains("<mail_type>")) {
+                        int tamano=linea.length();
+                        int fin=tamano-12;
+                        //System.out.println(linea.length());
+                        //System.out.println(linea);
+                        //System.out.println("mail_id: "+linea.substring(9, fin));
+                        informationString.append("mail_type: "+linea.substring(11, fin));
+                        informationString.append("\n");
+                    }else if(linea.contains("<mail_subj>")) {
+                        int tamano=linea.length();
+                        int fin=tamano-12;
+                        //System.out.println(linea.length());
+                        //System.out.println(linea);
+                        //System.out.println("mail_id: "+linea.substring(9, fin));
+                        informationString.append("mail_subj: "+linea.substring(11, fin));
+                        informationString.append("\n");
+                    }else if(linea.contains("<gstatus>")) {
+                        int tamano=linea.length();
+                        int fin=tamano-10;
+                        //System.out.println(linea.length());
+                        //System.out.println(linea);
+                        //System.out.println("mail_id: "+linea.substring(9, fin));
+                        informationString.append("gstatus: "+linea.substring(9, fin));
+                        informationString.append("\n");
+                    }else if(linea.contains("</pdf_row>")) {
+                        int tamano=linea.length();
+                        int fin=tamano-10;
+                        //System.out.println(linea.length());
+                        //System.out.println(linea);
+                        //System.out.println("mail_id: "+linea.substring(9, fin));
+                       // informationString.append("gstatus: "+linea.substring(9, fin));
+                        informationString.append("\n");
                     }
                                        
                 }
                 scanner.close();
                 System.out.println(informationString);
+                System.out.println(contador);
             }
            // System.out.println("Elemento raiz:"+documentoXML.getDocumentElement().getNodeName());
             
@@ -62,7 +120,11 @@ public class SodigLleida {
         } catch (Exception e) {
             System.out.println("error: ");
         }
-                
     }
+    
+    //crear excel
+    
+    
+     
     
 }
