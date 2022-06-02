@@ -32,16 +32,29 @@ public class SodigLleida {
                 Scanner scanner=new Scanner(url.openStream());
                 while (scanner.hasNext()) {                    
                     String linea=scanner.nextLine();
-                    informationString.append(linea);
-                    informationString.append("\n");
+                    
+                    //informationString.append("\n");
                     if (linea.contains("<mail_id>")) {
-                        System.out.println(linea.length());
-                        System.out.println(linea);
+                        int tamano=linea.length();
+                        int fin=tamano-10;
+                        //System.out.println(linea.length());
+                        //System.out.println(linea);
+                        //System.out.println("mail_id: "+linea.substring(9, fin));
+                        informationString.append("mail_id: "+linea.substring(9, fin));
+                        informationString.append("\n");
+                    }else if(linea.contains("<mail_date>")) {
+                        int tamano=linea.length();
+                        int fin=tamano-12;
+                        //System.out.println(linea.length());
+                        //System.out.println(linea);
+                        //System.out.println("mail_id: "+linea.substring(9, fin));
+                        informationString.append("mail_date: "+linea.substring(11, fin));
+                        informationString.append("\n");
                     }
                                        
                 }
                 scanner.close();
-                //System.out.println(informationString);
+                System.out.println(informationString);
             }
            // System.out.println("Elemento raiz:"+documentoXML.getDocumentElement().getNodeName());
             
