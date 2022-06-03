@@ -11,6 +11,9 @@ import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.net.ssl.HttpsURLConnection;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
 
 
 
@@ -23,11 +26,11 @@ public class SodigLleida {
     public static void main(String[] args) throws MalformedURLException, IOException {
         System.out.println("Hola mundo");
           int contador=0;
-        
-        try {
+        CrearExcel();
+        /*try {
          
         //  URL url= new URL("https://tsa.lleida.net/cgi-bin/mailcertapi.cgi?action=list_pdf&user=sodigsa@ec&password=TIiANcmymJ&mail_id=100274269");
-        URL url= new URL("https://tsa.lleida.net/cgi-bin/mailcertapi.cgi?action=list_pdf&user=sodigsa@ec&password=TIiANcmymJ&mail_date_min=20220101070000&mail_date_max=20220601070000");
+        URL url= new URL("https://tsa.lleida.net/cgi-bin/mailcertapi.cgi?action=list_pdf&user=sodigsa@ec&password=TIiANcmymJ&mail_date_min=20220501070000&mail_date_max=20220601070000");
         HttpsURLConnection conn=(HttpsURLConnection)url.openConnection();
         conn.setRequestMethod("GET");
         conn.connect();
@@ -119,12 +122,32 @@ public class SodigLleida {
            
         } catch (Exception e) {
             System.out.println("error: ");
-        }
+        }*/
     }
     
     //crear excel
+   public static void CrearExcel() {
     
-    
+        Workbook book=new HSSFWorkbook();
+        Sheet sheet=book.createSheet("Hola Java");
+        
+         try {
+             FileOutputStream fileout=new FileOutputStream("Excel.xls");
+            try {
+                book.write(fileout);
+            } catch (IOException ex) {
+                Logger.getLogger(SodigLleida.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            try {
+                fileout.close();
+            } catch (IOException ex) {
+                Logger.getLogger(SodigLleida.class.getName()).log(Level.SEVERE, null, ex);
+            }
+             
+         } catch (FileNotFoundException ex) {
+             Logger.getLogger(SodigLleida.class.getName()).log(Level.SEVERE, null, ex);
+         }
+    }
      
     
 }
