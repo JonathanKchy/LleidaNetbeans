@@ -45,21 +45,22 @@ public class SodigLleida {
         Row row=sheet.createRow(contador);
         row.createCell(0).setCellValue("Id");
         row.createCell(1).setCellValue("Fecha Lleida");
-        row.createCell(2).setCellValue("Tipo");
-        row.createCell(3).setCellValue("Doc_OkKo");
-        row.createCell(4).setCellValue("Doc_UID");
-        row.createCell(5).setCellValue("Unidades Certificadas");
-        row.createCell(6).setCellValue("Dirección Origen");
-        row.createCell(7).setCellValue("Dirección Destino");
-        row.createCell(8).setCellValue("Dirección Cc");
-        row.createCell(9).setCellValue("Estado");
-        row.createCell(10).setCellValue("Estado Aux");
-        row.createCell(11).setCellValue("Asunto");
-        row.createCell(12).setCellValue("Doc_Visualizado");
-        row.createCell(13).setCellValue("Fecha y hora de visualización");
-        row.createCell(14).setCellValue("Add_UID");
+        row.createCell(2).setCellValue("Fecha Local");
+        row.createCell(3).setCellValue("Tipo");
+        row.createCell(4).setCellValue("Doc_OkKo");
+        row.createCell(5).setCellValue("Doc_UID");
+        row.createCell(6).setCellValue("Unidades Certificadas");
+        row.createCell(7).setCellValue("Dirección Origen");
+        row.createCell(8).setCellValue("Dirección Destino");
+        row.createCell(9).setCellValue("Dirección Cc");
+        row.createCell(10).setCellValue("Estado");
+        row.createCell(11).setCellValue("Estado Aux");
+        row.createCell(12).setCellValue("Asunto");
+        row.createCell(13).setCellValue("Doc_Visualizado");
+        row.createCell(14).setCellValue("Fecha y hora de visualización");
+        row.createCell(15).setCellValue("Add_UID");
         
-        
+        int dia_anterior = 1;
         
        try {
          
@@ -93,6 +94,111 @@ public class SodigLleida {
                     else if(linea.contains("<mail_date>")) {
                         int tamano=linea.length();
                         int fin=tamano-12;
+                        
+                        //////
+                        /////
+                        int andre_dia, andre_hora,mes_andre;
+                    String andre_dia_string,andre_hora_string="01";
+                    mes_andre = Integer.parseInt(linea.substring(11,15));
+                    andre_dia = Integer.parseInt(linea.substring(17,19));
+                    andre_hora = Integer.parseInt(linea.substring(19,21));
+                    if (dia_anterior <=andre_dia)
+                    {
+                        dia_anterior = andre_dia;
+                    }
+                    switch (andre_hora)
+                    {
+                        case 23:
+                            andre_hora_string = "16";
+                            break;
+                        case 22:
+                            andre_hora_string = "15";
+                            break;
+                        case 21:
+                            andre_hora_string = "14";
+                            break;
+                        case 20:
+                            andre_hora_string = "13";
+                            break;
+                        case 19:
+                            andre_hora_string = "12";
+                            break;
+                        case 18:
+                            andre_hora_string = "11";
+                            break;
+                        case 17:
+                            andre_hora_string = "10";
+                            break;
+                        case 16:
+                            andre_hora_string = "09";
+                            break;
+                        case 15:
+                            andre_hora_string = "08";
+                            break;
+                        case 14:
+                            andre_hora_string = "07";
+                            break;
+                        case 13:
+                            andre_hora_string = "06";
+                            break;
+                        case 12:
+                            andre_hora_string = "05";
+                            break;
+                        case 11:
+                            andre_hora_string = "04";
+                            break;
+                        case 10:
+                            andre_hora_string = "03";
+                            break;
+                        case 9:
+                            andre_hora_string = "02";
+                            break;
+                        case 8:
+                            andre_hora_string = "01";
+                            break ;
+                        case 7:
+                            andre_hora_string = "00";
+                            break;
+                        case 6:
+                            andre_hora_string = "23";
+                            break;
+                        case 5:
+                            andre_hora_string = "22";
+                            break;
+                        case 4:
+                            andre_hora_string = "21";
+                            break;
+                        case 3:
+                            andre_hora_string = "20";
+                            break;
+                        case 2:
+                            andre_hora_string = "19";
+                            break;
+                        case 1:
+                            andre_hora_string = "18";
+                            break;
+                        case 0:
+                            andre_hora_string = "17";
+                            break;
+                        default:
+                            break;
+                    }
+                    if (andre_hora<7)
+                    {
+                        andre_dia = andre_dia-1;
+                        if (andre_dia==0)
+                        {
+                            andre_dia = dia_anterior;
+                            mes_andre = mes_andre - 1;
+                        }
+                        
+                    }
+                    fecha_andre = andre_dia + "/" +mes_andre + "/" + linea.substring(11,15)+ " " + andre_hora_string + ":" + linea.substring(21,23)+ ":" + linea.substring(23,25);
+                    ////
+                    ////
+                        
+                        
+                        
                         mail_date=linea.substring(17,19)+"/"+linea.substring(15,17)+"/"+linea.substring(11,15)+" "+linea.substring(19,21)+":"+linea.substring(21,23)+":"+linea.substring(23,25);
                         //System.out.println(linea.length());
                         //System.out.println(linea);
@@ -261,6 +367,8 @@ public class SodigLleida {
                         numeroCelda++;
                         row.createCell(numeroCelda).setCellValue(mail_date);
                         numeroCelda++;
+                        row.createCell(numeroCelda).setCellValue(fecha_andre);
+                        numeroCelda++;
                         row.createCell(numeroCelda).setCellValue(mail_type);
                         numeroCelda++;
                         row.createCell(numeroCelda).setCellValue(file_doc_model);
@@ -289,7 +397,7 @@ public class SodigLleida {
                         numeroCelda++;
                         
                         //seteo de variables
-                        mail_date=mail_date=mail_type=file_doc_model=file_uid=mail_from=mail_to=gstatus=gstatus_aux=mail_subj=add_id=add_uid=add_displaydate="";
+                        mail_date=mail_date=mail_type=fecha_andre=file_doc_model=file_uid=mail_from=mail_to=gstatus=gstatus_aux=mail_subj=add_id=add_uid=add_displaydate="";
                         //nueva fila
                         numeroCelda=0;
                     }
