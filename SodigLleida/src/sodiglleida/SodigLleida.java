@@ -11,9 +11,6 @@ import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.net.ssl.HttpsURLConnection;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
 
 
 
@@ -26,7 +23,7 @@ public class SodigLleida {
     public static void main(String[] args) throws MalformedURLException, IOException {
         System.out.println("Hola mundo");
           int contador=0;
-        CrearExcel();
+        //CrearExcel();
         /*try {
          
         //  URL url= new URL("https://tsa.lleida.net/cgi-bin/mailcertapi.cgi?action=list_pdf&user=sodigsa@ec&password=TIiANcmymJ&mail_id=100274269");
@@ -126,7 +123,7 @@ public class SodigLleida {
     }
     
     //crear excel
-   public static void CrearExcel() {
+  /* public static void CrearExcel() {
     
         Workbook book=new HSSFWorkbook();
         Sheet sheet=book.createSheet("Hola Java");
@@ -147,7 +144,7 @@ public class SodigLleida {
          } catch (FileNotFoundException ex) {
              Logger.getLogger(SodigLleida.class.getName()).log(Level.SEVERE, null, ex);
          }
-    }
+    }*/
      
     
 }

@@ -98,10 +98,11 @@ public class SodigLleida {
                         //////
                         /////
                         int andre_dia, andre_hora,mes_andre;
-                    String andre_dia_string,andre_hora_string="01";
-                    mes_andre = Integer.parseInt(linea.substring(11,15));
-                    andre_dia = Integer.parseInt(linea.substring(17,19));
-                    andre_hora = Integer.parseInt(linea.substring(19,21));
+                        String andre_dia_string,andre_hora_string="01";
+                        mes_andre = Integer.parseInt(linea.substring(15,17));
+                        andre_dia = Integer.parseInt(linea.substring(17,19));
+                        andre_hora = Integer.parseInt(linea.substring(19,21));
+                                               
                     if (dia_anterior <=andre_dia)
                     {
                         dia_anterior = andre_dia;
@@ -183,13 +184,13 @@ public class SodigLleida {
                         default:
                             break;
                     }
-                    if (andre_hora<7)
+                   if (andre_hora<7)
                     {
                         andre_dia = andre_dia-1;
                         if (andre_dia==0)
                         {
                             andre_dia = dia_anterior;
-                            mes_andre = mes_andre - 1;
+                            mes_andre = mes_andre-1;
                         }
                         
                     }
@@ -404,7 +405,7 @@ public class SodigLleida {
                                        
                 }
                 scanner.close();
-                System.out.println(informationString);
+                //System.out.println(informationString);
                 System.out.println(contador);
             }
            // System.out.println("Elemento raiz:"+documentoXML.getDocumentElement().getNodeName());
