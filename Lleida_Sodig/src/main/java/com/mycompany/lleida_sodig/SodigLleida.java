@@ -37,6 +37,7 @@ public class SodigLleida {
      public static void main(String[] args) throws MalformedURLException, IOException {
         System.out.println("Espere");
           int contador=0,numeroCelda=0;
+          
         // Creamos el libro de trabajo de Excel formato OOXML
         Workbook book=new XSSFWorkbook();
          // La hoja donde pondremos los datos
@@ -64,8 +65,8 @@ public class SodigLleida {
         
        try {
          
-        //URL url= new URL("https://tsa.lleida.net/cgi-bin/mailcertapi.cgi?action=list_pdf&user=sodigsa@ec&password=TIiANcmymJ&mail_id=97277518");
-        URL url= new URL("https://tsa.lleida.net/cgi-bin/mailcertapi.cgi?action=list_pdf&user=sodigsa@ec&password=TIiANcmymJ&mail_date_min=20220501070000&mail_date_max=20220601070000");
+        URL url= new URL("https://tsa.lleida.net/cgi-bin/mailcertapi.cgi?action=list_pdf&user=sodigsa@ec&password=TIiANcmymJ&mail_id=97277518");
+        //URL url= new URL("https://tsa.lleida.net/cgi-bin/mailcertapi.cgi?action=list_pdf&user=sodigsa@ec&password=TIiANcmymJ&mail_date_min=20220501070000&mail_date_max=20220601070000");
         HttpsURLConnection conn=(HttpsURLConnection)url.openConnection();
         conn.setRequestMethod("GET");
         conn.connect();
@@ -436,7 +437,9 @@ public class SodigLleida {
             // Creamos el flujo de salida de datos,
             // apuntando al archivo donde queremos 
             // almacenar el libro de Excel
-             FileOutputStream fileout=new FileOutputStream("Excel.xlsx");
+            String desktopPath = System.getProperty("user.home") + "/Desktop";
+            System.out.println(desktopPath.replace("\\", "/"));
+             FileOutputStream fileout=new FileOutputStream(desktopPath.replace("\\", "/")+"/Excel.xlsx");
             try {
                 // Almacenamos el libro de 
             // Excel via ese 
